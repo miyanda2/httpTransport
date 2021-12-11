@@ -1,0 +1,36 @@
+{
+    "name": "ajala/http-transport",
+    "description": "Receives request before Guzzle process",
+    "type": "library",
+    "require": {
+      "php": ">=5.3.0"
+    },
+    "license": "",
+    "authors": [
+      {
+        "name": "Micheal Iyanda",
+        "email": "miyanda742@gmail.com"
+      }
+    ],
+    "minimum-stability": "dev",
+
+    "autoload": {
+        "psr-4": {
+          "httpTransport\\": "src/"
+        }
+    },
+
+        "extra": {
+            "laravel": {
+              "providers": [
+                "HttpTransport\\TransportProvider"
+              ]
+            }
+          },
+
+          "require-dev": {
+            "orchestra/testbench": "^3.8"
+          }
+        
+
+  }
