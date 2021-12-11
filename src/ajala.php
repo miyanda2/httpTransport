@@ -1,8 +1,8 @@
 <?php 
 namespace httpTransport;
-class ajala
+class Ajala
 {
-    public static function ajala()
+    public static function Ajala()
     {
         //return '';
     }
