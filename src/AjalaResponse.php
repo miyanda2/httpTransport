@@ -3,6 +3,7 @@
 namespace Ajala;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 
@@ -61,9 +62,12 @@ class AjalaResponse
                 }
 
                 $response_array['headers'] = $response_headers;
-                $response_array['body'] = $response->getBody()->getContents();
-                $response_code = $response->getStatusCode();
+                $response_array['body'] = $exception->getResponse()->getBody();
+                $response_code = $exception->getResponse()->getStatusCode();
             }
+        } catch (GuzzleException $e) {
+            $response_code = $e->getCode();
+            $response_array['body'] = $e->getMessage();
         }
 
         $response_payload = array(
