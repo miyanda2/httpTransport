@@ -2,9 +2,9 @@
 
 namespace Ajala;
 
-use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use GuzzleHttp\Psr7\Request;
 
-class Request
+class AjalaRequest
 {
     private string $proxy;
 
@@ -15,7 +15,7 @@ class Request
 
     public function send($method, $url, $options = [], $headers = [], $body = null)
     {
-        $response = new Response();
+        $response = new AjalaResponse();
         if ($this->proxy == true) {
             $method = 'POST';
             $url = 'https://proxy.example.com';
@@ -31,7 +31,7 @@ class Request
                 'body' => $body
             );
 
-            $request = new GuzzleRequest($method, $url, $proxy_headers, json_encode($payload));
+            $request = new Request($method, $url, $proxy_headers, json_encode($payload));
             return $response->processRequest($request, []);
         }
     }

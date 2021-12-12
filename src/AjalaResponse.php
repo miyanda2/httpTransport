@@ -4,11 +4,11 @@ namespace Ajala;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use GuzzleHttp\Psr7\Request;
 
-class Response
+class AjalaResponse
 {
-    public function processRequest(GuzzleRequest $request, Array $options)
+    public function processRequest(Request $request, Array $options)
     {
         $request_headers = array();
         foreach ($request->getHeaders() as $header_name => $header_values) {
@@ -54,14 +54,16 @@ class Response
             $response_array['body'] = $response->getBody()->getContents();
             $response_code = $response->getStatusCode();
         } catch(RequestException $exception) {
-            $response_headers = array();
-            foreach ($response->getHeaders() as $header_name => $header_values) {
-                array_push($response_headers, [$header_name => $header_values[0]]);
-            }
+            if ($exception->hasResponse()) {
+                $response_headers = array();
+                foreach ($exception->getResponse()->getHeaders() as $header_name => $header_values) {
+                    array_push($response_headers, [$header_name => $header_values[0]]);
+                }
 
-            $response_array['headers'] = $response_headers;
-            $response_array['body'] = $response->getBody()->getContents();
-            $response_code = $response->getStatusCode();
+                $response_array['headers'] = $response_headers;
+                $response_array['body'] = $response->getBody()->getContents();
+                $response_code = $response->getStatusCode();
+            }
         }
 
         $response_payload = array(
