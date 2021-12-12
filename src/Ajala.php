@@ -36,7 +36,7 @@ class Ajala
     {
         $valid_url = filter_var($url, FILTER_VALIDATE_URL);
         if ($valid_url) {
-            $request = new Request($proxy);
+            $request = new AjalaRequest($proxy);
             return $request->send($method, $url, $options, $headers, $body);
         } else {
             return json_encode(["status" => false, "message"=> "Invalid request url"]);
