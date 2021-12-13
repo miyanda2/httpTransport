@@ -1,15 +1,17 @@
 <?php 
 namespace Ajala;
 
+use phpDocumentor\Reflection\Types\Boolean;
+
 class Ajala
 {
-    private bool $use_proxy;
-    private array $guzzle_options;
+    private $use_proxy;
+    private $guzzle_options;
 
     public function __construct()
     {
         $this->use_proxy = false;
-        $this->guzzle_options = null;
+        $this->guzzle_options = [];
     }
 
     public function get($url, $headers = [], $body = null, $proxy = false, $options = null)
